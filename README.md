@@ -12,6 +12,7 @@ npm install --save loadenvjs
 
 ```js
 var envjs = require('loadenvjs')
+// load .env.js
 var env = envjs()
 
 console.log(env)
