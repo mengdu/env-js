@@ -1,5 +1,5 @@
 {
-  "name": "env-js",
+  "name": "loadenvjs",
   "version": "1.0.0",
   "description": "Loads .env file",
   "main": "libs/index.js",

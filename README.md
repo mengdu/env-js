@@ -1,4 +1,4 @@
-## env-js
+## loadenvjs
 
 一个加载环境变量的库
 
@@ -7,11 +7,11 @@
 ### 安装
 
 ```bat
-npm install --save env-js
+npm install --save loadenvjs
 ```
 
 ```js
-var envjs = require('env-js')
+var envjs = require('loadenvjs')
 var env = envjs()
 
 console.log(env)
