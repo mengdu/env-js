@@ -1,8 +1,9 @@
 'use strict'
 
 var fs = require('fs')
-
+var path = require('path')
 /*
+ * copy from https://github.com/motdotla/dotenv
  * Parses a string or buffer into an object
  * @param {(string|Buffer)} src - source to be parsed
  * @returns {Object} keys and values from src
@@ -38,9 +39,18 @@ function parse (src) {
 }
 
 
-module.exports = function (path, encoding) {
+module.exports = function (filename, encoding) {
+  // 如果为.js后缀，优先加载
+  if (path.extname(filename) === '.js') {
+    try {
+      return require(filename)
+    } catch (err) {
+      return {error: err}
+    }
+  }
   try {
-    var envText = fs.readFileSync(path, {encoding: encoding})
+    // 读取.env文件
+    var envText = fs.readFileSync(filename, {encoding: encoding})
     return parse(envText)
   } catch (err) {
     return {error: err}

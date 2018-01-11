@@ -4,6 +4,7 @@ function load (options) {
   options = options || {}
   options.path = options.path || '.env'
   options.encoding = options.encoding || 'utf8'
+  options.mount = typeof options.mount !== 'undefined' ? options.mount : true 
   // load env
   var env = loadenv(options.path, options.encoding)
 
@@ -13,7 +14,7 @@ function load (options) {
     } else {
       global[globalName] = env
     }
-  } else {
+  } else if (options.mount) {
     for (var key in env) {
       if (!process.env.hasOwnProperty(key)) {
         process.env[key] = env[key]
