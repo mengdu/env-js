@@ -4,7 +4,7 @@
   "description": "Loads .env file",
   "main": "libs/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "env",
@@ -12,5 +12,9 @@
     "config"
   ],
   "author": "lanyue",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.1.0"
+  }
 }

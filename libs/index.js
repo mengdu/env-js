@@ -40,8 +40,17 @@ function parse (src) {
 function readEvnFile (filename, encoding) {
   // 如果为.js后缀，优先加载
   if (path.extname(filename) === '.js') {
+    // try {
+    //   return require(filename)
+    // } catch (err) {
+    //   return {error: err}
+    // }
+    var envText = ''
     try {
-      return require(filename)
+      // 义字符形式读js文件
+      envText = fs.readFileSync(filename, {encoding: 'utf8'})
+      // 编译字符串
+      return new Function(envText.toString())() || {}
     } catch (err) {
       return {error: err}
     }
@@ -58,17 +67,17 @@ function readEvnFile (filename, encoding) {
 
 function load (options) {
   options = options || {}
-  options.path = options.path || '.env'
+  options.path = options.path || '.env.js'
   options.encoding = options.encoding || 'utf8'
   options.mount = typeof options.mount !== 'undefined' ? options.mount : true 
   // load env
   var env = readEvnFile(options.path, options.encoding)
 
   if (options.globalName) {
-    if (global[globalName]) {
-      console.warn('global variable \'' + globalName + '\' exists')
+    if (global[options.globalName]) {
+      console.warn('global variable \'' + options.globalName + '\' exists')
     } else {
-      global[globalName] = env
+      global[options.globalName] = env
     }
   } else if (options.mount) {
     for (var key in env) {
@@ -80,4 +89,6 @@ function load (options) {
   return env
 }
 
+
 module.exports = load
+module.exports.parse = parse
